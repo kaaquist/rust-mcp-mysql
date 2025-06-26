@@ -1,0 +1,10 @@
+FROM rust:latest as build
+WORKDIR /usr/src/rust-mcp-mysql
+COPY . .
+RUN cargo install --path .
+RUN cargo build --release
+
+FROM debian:trixie-slim
+COPY --from=build /usr/src/rust-mcp-mysql/target/release/rust-mcp-mysql /usr/local/bin/rust-mcp-mysql
+EXPOSE 9955
+ENTRYPOINT ["rust-mcp-mysql"]
