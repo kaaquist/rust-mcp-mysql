@@ -12,6 +12,3 @@ use rmcp::{
 
 use serde_json::json;
 use tokio::sync::Mutex;
-use mysql::*;
-use mysql::prelude::*;
-
