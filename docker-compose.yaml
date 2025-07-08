@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres-mcp-server:
     build:
-      context: postgres-mcp-server
+      context: .
       dockerfile: ./dockerfile.postgres_mcp_rust
     ports:
       - "9955:9955"
