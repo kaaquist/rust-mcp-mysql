@@ -8,7 +8,20 @@ docker build --platform linux/amd64 -t rust-mcp-postgres:latest -f dockerfile.po
 ```
 
 ### Using Docker-Compose
-docker-compose up -d
+Run this command (you need the `.env` file - see below):
+```text
+docker-compose --env-file=.env up -d
+```
+
+#### Create .env
+Create a `.env` file with that database, user, password, host and port.
+```
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=mysecretpassword
+POSTGRES_DATABASE=postgres
+```
 
 #### Postgres
 If you encounter the following error:
