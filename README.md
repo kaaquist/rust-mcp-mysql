@@ -10,8 +10,25 @@ docker build --platform linux/amd64 -t rust-mcp-postgres:latest -f dockerfile.po
 ### Using Docker-Compose
 Run this command (you need the `.env` file - see below):
 ```text
-docker-compose --env-file=.env up -d
+docker-compose --env-file=.env up
 ```
+This here is what should be outputted:
+```text
+Starting rust-mcp-mysql_psql_1                ... done
+Creating rust-mcp-mysql_postgres-mcp-server_1 ... done
+Attaching to rust-mcp-mysql_psql_1, rust-mcp-mysql_postgres-mcp-server_1
+psql_1                 | 
+psql_1                 | PostgreSQL Database directory appears to contain a database; Skipping initialization
+psql_1                 | 
+psql_1                 | 2025-07-08 13:58:15.283 UTC [1] LOG:  starting PostgreSQL 17.5 (Debian 17.5-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+psql_1                 | 2025-07-08 13:58:15.283 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+psql_1                 | 2025-07-08 13:58:15.283 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+psql_1                 | 2025-07-08 13:58:15.289 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+psql_1                 | 2025-07-08 13:58:15.297 UTC [29] LOG:  database system was shut down at 2025-07-08 13:28:06 UTC
+psql_1                 | 2025-07-08 13:58:15.306 UTC [1] LOG:  database system is ready to accept connections
+postgres-mcp-server_1  | 2025-07-08T13:58:15.311910Z  INFO rust_mcp_mysql: sse server started!
+```
+The above `docker-compose` command can be started with `-d` for detached mode.  
 
 #### Create .env
 Create a `.env` file with that database, user, password, host and port.
