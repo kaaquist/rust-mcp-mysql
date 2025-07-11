@@ -40,7 +40,22 @@ POSTGRES_PASSWORD=mysecretpassword
 POSTGRES_DATABASE=postgres
 ```
 
-#### Postgres
+#### Postgres w. pgvector
+**Be Aware** you need to enable pgvector to get the full potential of this here demo.  
+Connect to the running container
+```text
+docker exec -it <name of container | rust-mcp-postgres_psql> bash
+```
+start psql
+```text
+psql -U postgres -d postgres
+```
+Then execute the following command to enable the extension.
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+```
+
+###### Errors and hiccups
 If you encounter the following error:
 ```text
 psql_1  | 2025-07-08 12:20:15.913 UTC [49] FATAL:  no pg_hba.conf entry for host "172.28.0.1", user "postgres", database "postgres", no encryption
@@ -54,3 +69,4 @@ Then run the following command, to grand access to all:
 echo -e "host    all             all             all             	trust">>/var/lib/postgresql/data/pg_hba.conf
 ```
 After the above has been run we need to restart the docker-compose.
+
