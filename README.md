@@ -70,3 +70,11 @@ echo -e "host    all             all             all             	trust">>/var/l
 ```
 After the above has been run we need to restart the docker-compose.
 
+
+
+#### 🤝 Like to contribute
+all forms of contributions are welcome!
+
+Author: kaaquist
+Email: Contact via GitHub Issues
+Project Homepage: https://github.com/kaaquist/rust-mcp-mysql
