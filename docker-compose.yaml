@@ -1,0 +1,51 @@
+version: '3'
+services:
+  postgres-mcp-server:
+    build:
+      context: .
+      dockerfile: ./dockerfile.postgres_mcp_rust
+    ports:
+      - "9955:9955"
+    networks:
+      backend_net:
+        ipv4_address: 172.28.1.3
+    expose:
+      # Opens port 9955 on the container
+      - '9955'
+    environment:
+      - POSTGRES_HOST=172.28.1.2
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    tty: true
+  psql:
+    image: docker.io/pgvector/pgvector:pg17
+    command: []
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      # You can use whatever password you like
+      POSTGRES_PASSWORD: 'mysecretpassword'
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    expose:
+      # Opens port 5432 on the container
+      - '5432'
+      # Where our data will be persisted
+    volumes:
+      - /opt/psql/psql-db-data:/var/lib/postgresql/data
+    networks:
+      backend_net:
+        ipv4_address: 172.28.1.2
+# Names our volume
+#volumes:
+#  psql-db-data:
+networks:
+  backend_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

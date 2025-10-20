@@ -1,0 +1,10 @@
+# This here is to avoid we are building unless there are changes to the code.
+target/
+.dockerignore
+.gitignore
+.gitignore_local
+dockerfile.mysql_mcp_rust
+.git/
+.idea/
+README.md
+rust-mcp-mysql.iml
