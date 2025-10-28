@@ -1,3 +1,10 @@
+extern crate bb8_postgres;
+extern crate tokio_postgres;
+extern crate bb8;
+
+use bb8::Pool;
+use bb8_postgres::PostgresConnectionManager;
+use tokio_postgres::NoTls;
 use rmcp::transport::sse_server::{SseServer, SseServerConfig};
 use tracing_subscriber::{
     layer::SubscriberExt,
@@ -6,6 +13,8 @@ use tracing_subscriber::{
 };
 mod utils;
 use utils::counter::Counter;
+use utils::postgres_connector::AppState;
+
 const BIND_ADDRESS: &str = "0.0.0.0:9955";
 
 
@@ -21,13 +30,18 @@ async fn main() -> anyhow::Result<()> {
                 .unwrap_or_else(|_| "debug".to_string().into()),
         );
     tracing::subscriber::set_global_default(subscriber)?;
-
+    let pg_url = std::env::var("DATABASE_URL").unwrap_or_else(|_| "postgres://postgres:password@localhost/mydb".to_string());
+    let manager = PostgresConnectionManager::new_from_stringlike(pg_url.clone(), NoTls)?;
+    let pool = Pool::builder()
+        .max_size(10)
+        .build(manager)
+        .await
+        .context("Failed to create Postgres pool")?;
     let config = SseServerConfig {
         bind: BIND_ADDRESS.parse()?,
         sse_path: "/sse".to_string(),
         post_path: "/message".to_string(),
         ct: tokio_util::sync::CancellationToken::new(),
-        sse_keep_alive: None,
     };
 
     let (sse_server, router) = SseServer::new(config);
