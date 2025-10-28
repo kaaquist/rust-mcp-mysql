@@ -25,12 +25,6 @@ use bb8::Pool;
 use bb8_postgres::PostgresConnectionManager;
 
 
-#[derive(Clone)]
-pub struct PostgresConnector {
-    counter: Arc<Mutex<i32>>,
-    tool_router: ToolRouter<utils::counter::Counter>,
-}
-
 // MCP Tool Schemas (as per protocol)
 #[derive(Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -66,7 +60,7 @@ pub struct ExecuteQueryResponse {
 
 // App State
 #[derive(Clone)]
-struct AppState {
+pub struct AppState {
     pool: Pool<PostgresConnectionManager<NoTls>>,
 }
 
