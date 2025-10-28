@@ -1,11 +1,13 @@
 [package]
 name = "rust-mcp-mysql"
 version = "0.1.0"
-edition = "2024"
+edition = '2024'
 
 [dependencies]
-rmcp = { git = "https://github.com/modelcontextprotocol/rust-sdk", branch = "main", features = ["transport-io","transport-sse-server","server", "macros"] }
-tokio = { version = "1", features = ["full", "net"] }
+rmcp = { version = "0.1.5", features = ["server", "transport-sse-server", "transport-io", "macros"] }  # Rust MCP lib
+tokio = { version = "1.45.1", features = ["full", "net"] }
+tokio-util = "0.7.15"
+tokio-postgres = "0.7.15"
 tracing-subscriber = { version = "0.3", features = [
     "env-filter",
     "std",
@@ -15,9 +17,12 @@ futures = "0.3"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 anyhow = "1.0.98"
-tokio-util = "0.7.15"
 axum = "0.8.4"
 tracing = "0.1.41"
 async-std = "1.13.1"
-mysql = "*"
 postgres = "0.19.10"
+bb8 = "0.8"
+bb8-postgres = "0.8"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors"] }
+schemars = { version = "0.9.0", features = ["chrono04"] }
