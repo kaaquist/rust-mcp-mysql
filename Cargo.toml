@@ -1,13 +1,13 @@
 [package]
 name = "rust-mcp-mysql"
 version = "0.1.0"
-edition = "2024"
+edition = '2024'
 
 [dependencies]
-rmcp = { version = "0.1", features = ["server", "transport-sse-server", "transport-io", "macros"] }  # Rust MCP lib
-tokio = { version = "1", features = ["full", "net"] }
+rmcp = { version = "0.1.5", features = ["server", "transport-sse-server", "transport-io", "macros"] }  # Rust MCP lib
+tokio = { version = "1.45.1", features = ["full", "net"] }
 tokio-util = "0.7.15"
-tokio-postgres = "0.7"
+tokio-postgres = "0.7.15"
 tracing-subscriber = { version = "0.3", features = [
     "env-filter",
     "std",
